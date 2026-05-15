@@ -1158,6 +1158,19 @@ fun WorkerHomeScreen(
                 modifier = Modifier.padding(horizontal = 24.dp, vertical = 20.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
+                val infiniteTransition =
+                    rememberInfiniteTransition(label = "workerPulse")
+
+                val pulse by infiniteTransition.animateFloat(
+                    initialValue = 0.5f,
+                    targetValue = 1f,
+                    animationSpec = infiniteRepeatable(
+                        animation = tween(900),
+                        repeatMode = RepeatMode.Reverse
+                    ),
+                    label = "pulse"
+                )
+
                 Box(
                     modifier = Modifier
                         .size(14.dp)
