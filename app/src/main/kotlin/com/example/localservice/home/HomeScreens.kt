@@ -124,6 +124,7 @@ fun DashboardScaffold(
     userRepository: UserRepository,
     onAllServicesClick: () -> Unit,
 ) {
+
     val navController = rememberNavController()
     var userRole by remember(initialDashboardRole) { mutableStateOf(initialDashboardRole) }
     val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -134,6 +135,9 @@ fun DashboardScaffold(
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
     val tr: (String) -> String = { t(language, it) }
+    var showProfileMenu by remember {
+        mutableStateOf(false)
+    }
 
     Scaffold(
         snackbarHost = { SnackbarHost(snackbarHostState) },
