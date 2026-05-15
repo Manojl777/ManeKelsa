@@ -408,12 +408,49 @@ fun WorkerRegistrationScreen(
                         ColorPrimary.copy(alpha = 0.25f)
                     )
                 ) {
-                    Box(contentAlignment = Alignment.Center) {
-                        Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
-                            Icon(Icons.Default.Badge, contentDescription = null, tint = ColorTertiary.copy(alpha = 0.8f), modifier = Modifier.size(64.dp))
-                            Spacer(modifier = Modifier.height(8.dp))
-                            Text("JPEG, PNG, JPG", fontSize = 10.sp, color = ColorTertiary.copy(alpha = 0.5f), fontWeight = FontWeight.Bold)
-                            Text("< 10MB", fontSize = 10.sp, color = ColorTertiary.copy(alpha = 0.5f), fontWeight = FontWeight.Bold)
+
+                    Box(
+                        contentAlignment = Alignment.Center
+                    ) {
+
+                        if (idCardUri != null) {
+
+                            AsyncImage(
+                                model = idCardUri,
+                                contentDescription = null,
+                                modifier = Modifier.fillMaxSize()
+                            )
+
+                        } else {
+
+                            Column(
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                                verticalArrangement = Arrangement.Center
+                            ) {
+
+                                Icon(
+                                    Icons.Default.Badge,
+                                    contentDescription = null,
+                                    tint = ColorSecondary.copy(alpha = 0.85f),
+                                    modifier = Modifier.size(64.dp)
+                                )
+
+                                Spacer(modifier = Modifier.height(8.dp))
+
+                                Text(
+                                    "JPEG, PNG, JPG",
+                                    fontSize = 10.sp,
+                                    color = ColorTertiary.copy(alpha = 0.5f),
+                                    fontWeight = FontWeight.Bold
+                                )
+
+                                Text(
+                                    "< 10MB",
+                                    fontSize = 10.sp,
+                                    color = ColorTertiary.copy(alpha = 0.5f),
+                                    fontWeight = FontWeight.Bold
+                                )
+                            }
                         }
                     }
                 }
