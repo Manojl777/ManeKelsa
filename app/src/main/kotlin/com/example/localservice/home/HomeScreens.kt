@@ -505,8 +505,16 @@ fun DashboardScaffold(
                             userRepository = userRepository,
                             onRegister = {
                                 scope.launch {
-                                    snackbarHostState.showSnackbar(tr("registerSnack"))
+                                    snackbarHostState.showSnackbar(
+                                        tr("registerSnack")
+                                    )
                                 }
+                            },
+                            onEarningsClick = {
+
+                                navController.navigate(
+                                    "earnings_history"
+                                )
                             }
                         )
                     }
@@ -1004,6 +1012,7 @@ fun WorkerHomeScreen(
     language: String,
     userRepository: UserRepository,
     onRegister: () -> Unit,
+    onEarningsClick: () -> Unit
 ) {
     val tr: (String) -> String = { t(language, it) }
     val scope = rememberCoroutineScope()
@@ -1128,14 +1137,6 @@ fun WorkerHomeScreen(
                 lineHeight = 38.sp,
                 letterSpacing = (-1).sp
             )
-            Text(
-                text = p.fullName ?: "User",
-                fontSize = 26.sp,
-                fontStyle = androidx.compose.ui.text.font.FontStyle.Italic,
-                fontWeight = FontWeight.Black,
-                color = ColorTertiary,
-                letterSpacing = (-0.5).sp
-            )
         }
         
         Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(top = 4.dp)) {
@@ -1236,7 +1237,12 @@ fun WorkerHomeScreen(
 
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(16.dp)) {
             Card(
-                modifier = Modifier.weight(1f).height(110.dp),
+                modifier = Modifier
+                    .weight(1f)
+                    .height(110.dp)
+                    .clickable {
+                        onEarningsClick()
+                    },
                 shape = RoundedCornerShape(24.dp),
                 colors = CardDefaults.cardColors(containerColor = ColorSurface),
                 border = androidx.compose.foundation.BorderStroke(1.dp, ColorTertiary.copy(alpha = 0.1f)),
@@ -1311,7 +1317,9 @@ fun WorkerHomeScreen(
         Spacer(modifier = Modifier.height(32.dp))
 
         Surface(
-            onClick = { },
+            onClick = {
+                onEarningsClick()
+            },
             shape = RoundedCornerShape(24.dp),
             color = ColorSecondary.copy(alpha = 0.05f),
             modifier = Modifier.fillMaxWidth().height(64.dp)
