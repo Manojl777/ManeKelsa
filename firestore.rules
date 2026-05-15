@@ -1,0 +1,55 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+    
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    // Default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Workers Collection
+    match /workers/{workerId} {
+      allow get: if true; 
+      allow list: if true;
+      allow create, update: if isOwner(workerId);
+      allow delete: if isOwner(workerId);
+      
+      // Earnings subcollection
+      match /earnings/{earningId} {
+        allow read, write: if isOwner(workerId);
+      }
+    }
+
+    // Residents Collection
+    match /residents/{residentId} {
+      allow get: if isOwner(residentId);
+      allow create, update: if isOwner(residentId);
+      allow delete: if isOwner(residentId);
+    }
+
+    // Agent Status (Worker Visibility)
+    match /worker_status/{workerId} {
+      allow read: if true;
+      allow write: if isOwner(workerId);
+    }
+
+    // Ratings
+    match /worker_ratings/{ratingId} {
+      allow read: if true;
+      allow create, update: if isSignedIn() && request.auth.uid == request.resource.data.residentId;
+      allow delete: if isSignedIn() && request.auth.uid == resource.data.residentId;
+    }
+  }
+}

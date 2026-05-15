@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Mane Kelsa</string>
+    <!-- OAuth 2.0 Web client ID from Firebase Console → Project settings → Your apps → Web client, or google-services.json client_type 3 -->
+    <string name="default_web_client_id" translatable="false">REPLACE_WITH_WEB_CLIENT_ID.apps.googleusercontent.com</string>
+    <string name="allServices">All Services</string>
+</resources>
