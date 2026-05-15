@@ -98,9 +98,14 @@ fun ManeKelsaApp() {
                     darkMode = darkMode,
                     onDarkModeChange = { darkMode = it },
                     userRepository = userRepository,
-                    onNavigateHome = {
-                        navController.navigate("home") {
-                            popUpTo(navController.graph.id) { inclusive = true }
+
+                    onNavigateWorkerDashboard = {
+
+                        navController.navigate("home?role=worker") {
+                            popUpTo(navController.graph.id) {
+                                inclusive = true
+                            }
+
                             launchSingleTop = true
                         }
                     },
