@@ -1112,8 +1112,8 @@ fun WorkerHomeScreen(
             }
 
             Text(
-                text = "${tr("goodAfternoon")}, ",
-                fontSize = 26.sp,
+                text = "$greeting, ${p.fullName ?: "Worker"}!",
+                fontSize = 28.sp,
                 fontStyle = androidx.compose.ui.text.font.FontStyle.Italic,
                 fontWeight = FontWeight.Black,
                 color = ColorTertiary,
