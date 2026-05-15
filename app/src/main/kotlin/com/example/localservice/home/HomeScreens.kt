@@ -270,15 +270,152 @@ fun DashboardScaffold(
                                 color = ColorPrimary
                             )
                         }
-                        Surface(
-                            shape = CircleShape,
-                            color = ColorTertiary.copy(alpha = 0.1f),
-                            modifier = Modifier
-                                .size(36.dp)
-                                .clickable { userRole = "resident" },
-                            border = androidx.compose.foundation.BorderStroke(1.dp, ColorSecondary.copy(alpha = 0.3f))
-                        ) {
-                            Icon(Icons.Default.Person, contentDescription = null, modifier = Modifier.padding(6.dp))
+                        Box {
+
+                            Surface(
+                                shape = CircleShape,
+                                color = ColorSurface,
+                                modifier = Modifier
+                                    .size(42.dp)
+                                    .clickable {
+                                        showProfileMenu = true
+                                    },
+                                border = BorderStroke(
+                                    2.dp,
+                                    ColorPrimary.copy(alpha = 0.15f)
+                                )
+                            ) {
+
+                                Box(
+                                    contentAlignment = Alignment.Center
+                                ) {
+
+                                    Icon(
+                                        Icons.Default.Person,
+                                        contentDescription = null,
+                                        tint = ColorTertiary,
+                                        modifier = Modifier.size(26.dp)
+                                    )
+                                }
+                            }
+
+                            DropdownMenu(
+                                expanded = showProfileMenu,
+                                onDismissRequest = {
+                                    showProfileMenu = false
+                                },
+                                modifier = Modifier
+                                    .background(ColorSurface)
+                            ) {
+
+                                DropdownMenuItem(
+                                    text = {
+
+                                        Text(
+                                            "My ID Card",
+                                            color = ColorTertiary,
+                                            fontWeight = FontWeight.SemiBold
+                                        )
+                                    },
+                                    leadingIcon = {
+
+                                        Icon(
+                                            Icons.Default.AccountCircle,
+                                            contentDescription = null,
+                                            tint = ColorPrimary
+                                        )
+                                    },
+                                    onClick = {
+
+                                        showProfileMenu = false
+
+                                        navController.navigate(
+                                            "worker_details/mock_worker_uid"
+                                        )
+                                    }
+                                )
+
+                                DropdownMenuItem(
+                                    text = {
+
+                                        Text(
+                                            "Earnings History",
+                                            color = ColorTertiary,
+                                            fontWeight = FontWeight.SemiBold
+                                        )
+                                    },
+                                    leadingIcon = {
+
+                                        Icon(
+                                            Icons.Default.History,
+                                            contentDescription = null,
+                                            tint = ColorPrimary
+                                        )
+                                    },
+                                    onClick = {
+
+                                        showProfileMenu = false
+
+                                        navController.navigate(
+                                            "earnings_history"
+                                        )
+                                    }
+                                )
+
+                                DropdownMenuItem(
+                                    text = {
+
+                                        Text(
+                                            "Settings",
+                                            color = ColorTertiary,
+                                            fontWeight = FontWeight.SemiBold
+                                        )
+                                    },
+                                    leadingIcon = {
+
+                                        Icon(
+                                            Icons.Default.Settings,
+                                            contentDescription = null,
+                                            tint = ColorSecondary
+                                        )
+                                    },
+                                    onClick = {
+
+                                        showProfileMenu = false
+
+                                        navController.navigate(
+                                            "settings"
+                                        )
+                                    }
+                                )
+
+                                HorizontalDivider(
+                                    color = ColorTertiary.copy(alpha = 0.08f)
+                                )
+
+                                DropdownMenuItem(
+                                    text = {
+
+                                        Text(
+                                            "Sign Out",
+                                            color = Color.Red,
+                                            fontWeight = FontWeight.Bold
+                                        )
+                                    },
+                                    leadingIcon = {
+
+                                        Icon(
+                                            Icons.Default.Logout,
+                                            contentDescription = null,
+                                            tint = Color.Red
+                                        )
+                                    },
+                                    onClick = {
+
+                                        showProfileMenu = false
+                                    }
+                                )
+                            }
                         }
                     } else {
                         IconButton(onClick = { onDarkModeChange(!darkMode) }) {
