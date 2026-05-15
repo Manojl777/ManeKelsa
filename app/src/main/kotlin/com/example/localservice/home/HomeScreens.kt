@@ -1101,6 +1101,16 @@ fun WorkerHomeScreen(
         horizontalAlignment = Alignment.Start
     ) {
         Row(verticalAlignment = Alignment.Bottom) {
+            val currentHour = java.util.Calendar
+                .getInstance()
+                .get(java.util.Calendar.HOUR_OF_DAY)
+
+            val greeting = when {
+                currentHour < 12 -> "Good Morning"
+                currentHour < 17 -> "Good Afternoon"
+                else -> "Good Evening"
+            }
+
             Text(
                 text = "${tr("goodAfternoon")}, ",
                 fontSize = 26.sp,
