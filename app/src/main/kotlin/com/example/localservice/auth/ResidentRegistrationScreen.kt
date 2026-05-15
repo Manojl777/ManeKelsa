@@ -25,6 +25,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.People
 import androidx.compose.ui.window.Dialog
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -125,18 +126,17 @@ fun ResidentRegistrationScreen(
                             modifier = Modifier.size(44.dp)
                         ) {
                             Box(contentAlignment = Alignment.Center) {
-                                Icon(Icons.Default.Home, contentDescription = null, tint = ColorSurface)
+                                Icon(Icons.Default.People, contentDescription = null, tint = ColorSurface)
                             }
                         }
-                        Column(modifier = Modifier.padding(start = 10.dp)) {
-                            Text(tr("appName"), fontWeight = FontWeight.Bold, color = ColorPrimary, fontSize = 16.sp)
-                            Text(
-                                tr("residentRegTitle"),
-                                fontWeight = FontWeight.Medium,
-                                color = ColorTertiary,
-                                fontSize = 12.sp
-                            )
-                        }
+                        Text(
+                            "Complete\nRegistration",
+                            fontWeight = FontWeight.ExtraBold,
+                            color = ColorPrimary,
+                            fontSize = 18.sp,
+                            lineHeight = 22.sp,
+                            modifier = Modifier.padding(start = 12.dp)
+                        )
                     }
                     IconButton(onClick = { onDarkModeChange(!darkMode) }) {
                         Icon(
@@ -217,11 +217,11 @@ fun ResidentRegistrationScreen(
                 },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(64.dp),
-                shape = RoundedCornerShape(16.dp),
+                    .height(72.dp),
+                shape = RoundedCornerShape(22.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = ColorPrimary)
             ) {
-                Text(tr("completeRegistration"), fontWeight = FontWeight.Bold, color = ColorSurface, fontSize = 18.sp)
+                Text(tr("completeRegistration"), fontWeight = FontWeight.Bold, color = ColorSurface, fontSize = 22.sp)
             }
             Spacer(modifier = Modifier.height(24.dp))
         }
@@ -229,10 +229,23 @@ fun ResidentRegistrationScreen(
 }
 
 @Composable
-private fun SectionTitle(text: String, color: androidx.compose.ui.graphics.Color) {
-    Text(text, fontWeight = FontWeight.Bold, fontSize = 16.sp, color = color, modifier = Modifier.padding(top = 8.dp, bottom = 4.dp))
-}
+private fun SectionTitle(
+    text: String,
+    color: androidx.compose.ui.graphics.Color
+) {
 
+    Text(
+        text = text,
+        fontWeight = FontWeight.Bold,
+        fontSize = 22.sp,
+        letterSpacing = 2.sp,
+        color = color,
+        modifier = Modifier.padding(
+            top = 14.dp,
+            bottom = 10.dp
+        )
+    )
+}
 @Composable
 private fun OutlinedField(
     label: String,
@@ -244,7 +257,9 @@ private fun OutlinedField(
         value = value,
         onValueChange = onChange,
         label = { Text(label, color = ColorTertiary.copy(alpha=0.6f)) },
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier
+            .fillMaxWidth()
+            .height(78.dp),
         shape = RoundedCornerShape(16.dp),
         singleLine = true,
         colors = androidx.compose.material3.OutlinedTextFieldDefaults.colors(
