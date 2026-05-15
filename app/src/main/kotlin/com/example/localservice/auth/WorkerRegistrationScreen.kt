@@ -388,8 +388,28 @@ fun WorkerRegistrationScreen(
                         ColorPrimary.copy(alpha = 0.25f)
                     )
                 ) {
-                    Box(contentAlignment = Alignment.Center) {
-                        Icon(Icons.Default.Person, contentDescription = null, tint = ColorPrimary.copy(alpha = 0.85f), modifier = Modifier.size(100.dp))
+
+                    Box(
+                        contentAlignment = Alignment.Center
+                    ) {
+
+                        if (profileImageUri != null) {
+
+                            AsyncImage(
+                                model = profileImageUri,
+                                contentDescription = null,
+                                modifier = Modifier.fillMaxSize()
+                            )
+
+                        } else {
+
+                            Icon(
+                                Icons.Default.Person,
+                                contentDescription = null,
+                                tint = ColorPrimary.copy(alpha = 0.85f),
+                                modifier = Modifier.size(100.dp)
+                            )
+                        }
                     }
                 }
                 Surface(
