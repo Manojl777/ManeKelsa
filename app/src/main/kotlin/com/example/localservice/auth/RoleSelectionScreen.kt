@@ -124,11 +124,12 @@ fun RoleSelectionScreen(
                 )
             }
         }
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(44.dp))
         Text(
             text = tr("howUse"),
-            fontSize = 24.sp,
+            fontSize = 38.sp,
             fontWeight = FontWeight.Black,
+            lineHeight = 44.sp,
             color = ColorPrimary,
             textAlign = TextAlign.Center
         )
@@ -169,7 +170,7 @@ fun RoleSelectionScreen(
             subtitle = tr("imResidentSub"),
             icon = Icons.Default.Groups,
             iconTint = ColorPrimary,
-            iconBg = ColorPrimary.copy(alpha = 0.1f),
+            iconBg = ColorPrimary.copy(alpha = 0.12f),
             onClick = { pickRole("resident") },
             enabled = !busy
         )
@@ -179,7 +180,7 @@ fun RoleSelectionScreen(
             subtitle = tr("imWorkerSub"),
             icon = Icons.Default.Work,
             iconTint = ColorSecondary,
-            iconBg = ColorSecondary.copy(alpha = 0.1f),
+            iconBg = ColorSecondary.copy(alpha = 0.12f),
             onClick = { pickRole("worker") },
             enabled = !busy
         )
@@ -209,10 +210,14 @@ private fun RoleCard(
     Card(
         onClick = onClick,
         enabled = enabled,
-        modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(32.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(130.dp),
+        shape = RoundedCornerShape(36.dp),
         colors = CardDefaults.cardColors(containerColor = ColorSurface),
-        elevation = CardDefaults.cardElevation(defaultElevation = 3.dp)
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = 10.dp
+        )
     ) {
         Row(
             modifier = Modifier.padding(20.dp),
@@ -221,16 +226,16 @@ private fun RoleCard(
             Surface(
                 color = iconBg,
                 shape = RoundedCornerShape(20.dp),
-                modifier = Modifier.size(56.dp)
+                modifier = Modifier.size(72.dp)
             ) {
                 Box(contentAlignment = Alignment.Center) {
-                    Icon(icon, contentDescription = null, tint = iconTint, modifier = Modifier.size(30.dp))
+                    Icon(icon, contentDescription = null, tint = iconTint, modifier = Modifier.size(38.dp))
                 }
             }
             Column(modifier = Modifier.padding(start = 16.dp)) {
-                Text(title, fontWeight = FontWeight.Bold, fontSize = 17.sp, color = MaterialTheme.colorScheme.onSurface)
+                Text(title, fontWeight = FontWeight.Bold, fontSize = 24.sp, color = MaterialTheme.colorScheme.onSurface)
                 Spacer(modifier = Modifier.height(4.dp))
-                Text(subtitle, fontSize = 13.sp, color = ColorTertiary, lineHeight = 18.sp)
+                Text(subtitle, fontSize = 15.sp, color = ColorTertiary.copy(alpha = 0.7f), lineHeight = 18.sp)
             }
         }
     }
