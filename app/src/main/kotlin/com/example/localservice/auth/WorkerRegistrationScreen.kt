@@ -511,7 +511,12 @@ private fun MultiSelectDropdown(
                         unfocusedContainerColor = ColorSurface
                     )
                 )
-                options.forEach { opt ->
+                options
+                    .filter {
+                        tr(it.labelKey)
+                            .contains(searchQuery, ignoreCase = true)
+                    }
+                    .forEach { opt ->
                     DropdownMenuItem(
                         text = { Text(tr(opt.labelKey), color = ColorTertiary) },
                         onClick = {
