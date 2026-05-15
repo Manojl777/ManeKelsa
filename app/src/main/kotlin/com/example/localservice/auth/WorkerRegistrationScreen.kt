@@ -122,6 +122,23 @@ fun WorkerRegistrationScreen(
     var state by remember { mutableStateOf("") }
     var pincode by remember { mutableStateOf("") }
     var workAreas by remember { mutableStateOf("") }
+    var profileImageUri by remember { mutableStateOf<Uri?>(null) }
+    var idCardUri by remember { mutableStateOf<Uri?>(null) }
+    val profilePicker =
+        rememberLauncherForActivityResult(
+            contract = ActivityResultContracts.GetContent()
+        ) { uri ->
+
+            profileImageUri = uri
+        }
+
+    val idPicker =
+        rememberLauncherForActivityResult(
+            contract = ActivityResultContracts.GetContent()
+        ) { uri ->
+
+            idCardUri = uri
+        }
     var showSuccess by remember { mutableStateOf(false) }
     val currentUid = "test_worker_uid"
 
