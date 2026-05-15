@@ -361,7 +361,10 @@ fun WorkerRegistrationScreen(
                         .height(140.dp),
                     shape = RoundedCornerShape(20.dp),
                     color = ColorSurface,
-                    border = BorderStroke(1.dp, ColorTertiary.copy(alpha = 0.1f))
+                    border = BorderStroke(
+                        1.5.dp,
+                        ColorPrimary.copy(alpha = 0.25f)
+                    )
                 ) {
                     Box(contentAlignment = Alignment.Center) {
                         Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
