@@ -92,6 +92,7 @@ fun WorkerRegistrationScreen(
     val tr: (String) -> String = { t(language, it) }
     var fullName by remember { mutableStateOf("") }
     var phone by remember { mutableStateOf("") }
+    var email by remember { mutableStateOf("") }
     var genderExpanded by remember { mutableStateOf(false) }
     var gender by remember { mutableStateOf("male") }
     var dob by remember { mutableStateOf("") }
@@ -229,8 +230,22 @@ fun WorkerRegistrationScreen(
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             SectionTitle(tr("secPersonal"), ColorPrimary)
-            OutlinedField(tr("labelFullName"), fullName) { fullName = it }
-            OutlinedField(tr("labelContact"), phone) { phone = it }
+
+            OutlinedField(tr("labelFullName"), fullName) {
+                fullName = it
+            }
+
+            OutlinedField(tr("labelContact"), phone) {
+                phone = it
+            }
+
+            OutlinedField(
+                "EMAIL",
+                email
+            ) {
+                email = it
+            }
+
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                 ExposedDropdownMenuBox(
                     expanded = genderExpanded,
@@ -373,34 +388,18 @@ fun WorkerRegistrationScreen(
                         ColorPrimary.copy(alpha = 0.25f)
                     )
                 ) {
-
-                    Box(
-                        contentAlignment = Alignment.Center
-                    ) {
-
-                        if (profileImageUri != null) {
-
-                            AsyncImage(
-                                model = profileImageUri,
-                                contentDescription = null,
-                                modifier = Modifier.fillMaxSize()
-                            )
-
-                        } else {
-
-                            Icon(
-                                Icons.Default.Person,
-                                contentDescription = null,
-                                tint = ColorPrimary.copy(alpha = 0.85f),
-                                modifier = Modifier.size(100.dp)
-                            )
-                        }
+                    Box(contentAlignment = Alignment.Center) {
+                        Icon(Icons.Default.Person, contentDescription = null, tint = ColorPrimary.copy(alpha = 0.85f), modifier = Modifier.size(100.dp))
                     }
                 }
                 Surface(
                     modifier = Modifier
                         .weight(1f)
-                        .height(140.dp),
+                        .height(140.dp)
+                        .clickable {
+
+                            idPicker.launch("image/*")
+                        },
                     shape = RoundedCornerShape(20.dp),
                     color = ColorSurface,
                     border = BorderStroke(
@@ -516,6 +515,7 @@ private fun MultiSelectDropdown(
     language: String
 ) {
     var expanded by remember { mutableStateOf(false) }
+    var searchQuery by remember { mutableStateOf("") }
     val tr: (String) -> String = { t(language, it) }
 
     Column {
