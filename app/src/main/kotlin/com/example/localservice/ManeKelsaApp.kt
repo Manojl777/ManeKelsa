@@ -136,6 +136,10 @@ fun ManeKelsaApp() {
                     onDarkModeChange = { darkMode = it },
                     initialDashboardRole = dashboardRole,
                     userRepository = userRepository,
+
+                    onAllServicesClick = {
+
+                    }
                 )
             }
         }
