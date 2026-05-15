@@ -1117,7 +1117,8 @@ fun WorkerHomeScreen(
                 fontStyle = androidx.compose.ui.text.font.FontStyle.Italic,
                 fontWeight = FontWeight.Black,
                 color = ColorTertiary,
-                letterSpacing = (-0.5).sp
+                lineHeight = 38.sp,
+                letterSpacing = (-1).sp
             )
             Text(
                 text = p.fullName ?: "User",
