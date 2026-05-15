@@ -371,7 +371,7 @@ fun WorkerRegistrationScreen(
                             Icon(Icons.Default.Badge, contentDescription = null, tint = ColorTertiary.copy(alpha = 0.8f), modifier = Modifier.size(64.dp))
                             Spacer(modifier = Modifier.height(8.dp))
                             Text("JPEG, PNG, JPG", fontSize = 10.sp, color = ColorTertiary.copy(alpha = 0.5f), fontWeight = FontWeight.Bold)
-                            Text("< 15MB", fontSize = 10.sp, color = ColorTertiary.copy(alpha = 0.5f), fontWeight = FontWeight.Bold)
+                            Text("< 10MB", fontSize = 10.sp, color = ColorTertiary.copy(alpha = 0.5f), fontWeight = FontWeight.Bold)
                         }
                     }
                 }
