@@ -86,7 +86,7 @@ fun WorkerRegistrationScreen(
     darkMode: Boolean,
     onDarkModeChange: (Boolean) -> Unit,
     userRepository: UserRepository,
-    onNavigateHome: () -> Unit,
+    onNavigateWorkerDashboard: () -> Unit,
     onBack: () -> Unit,
 ) {
     val tr: (String) -> String = { t(language, it) }
@@ -158,7 +158,7 @@ fun WorkerRegistrationScreen(
             workAreas = workAreas,
             onContinue = {
                 showSuccess = false
-                onNavigateHome()
+                onNavigateWorkerDashboard()
             },
             language = language
         )
@@ -246,7 +246,9 @@ fun WorkerRegistrationScreen(
                 email = it
             }
 
-            Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+            Row(horizontalArrangement = Arrangement.spacedBy(12.dp),
+                verticalAlignment = Alignment.Top
+            ) {
                 ExposedDropdownMenuBox(
                     expanded = genderExpanded,
                     onExpandedChange = { genderExpanded = it },
@@ -344,13 +346,6 @@ fun WorkerRegistrationScreen(
                         Icon(Icons.Default.CalendarToday, contentDescription = null, tint = ColorTertiary.copy(alpha = 0.6f))
                     }
                 }
-                Text(
-                    text = "• Must be 18 years or older to register",
-                    color = ColorSecondary,
-                    fontSize = 11.sp,
-                    fontWeight = FontWeight.SemiBold,
-                    modifier = Modifier.padding(start = 8.dp, top = 4.dp)
-                )
             }
             Text(
                 text = "• Must be 18 years or older to register",
@@ -387,7 +382,11 @@ fun WorkerRegistrationScreen(
                 Surface(
                     modifier = Modifier
                         .weight(1f)
-                        .height(140.dp),
+                        .height(140.dp)
+                        .clickable {
+
+                            profilePicker.launch("image/*")
+                        },
                     shape = RoundedCornerShape(20.dp),
                     color = ColorSurface,
                     border = BorderStroke(

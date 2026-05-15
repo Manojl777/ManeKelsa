@@ -83,9 +83,6 @@ fun LoginScreen(
                     tonalElevation = 1.dp,
                     modifier = Modifier.size(50.dp)
                 ) {
-                    IconButton(
-                        onClick = { onDarkModeChange(!darkMode) }
-                    ) {
                         Icon(
                             imageVector =
                                 if (darkMode)
@@ -96,7 +93,6 @@ fun LoginScreen(
                             tint = ColorPrimary
                         )
                     }
-                }
                 Surface(
                     onClick = {
                         onLanguageChange(
@@ -106,9 +102,7 @@ fun LoginScreen(
                     shape = RoundedCornerShape(50),
                     color = MaterialTheme.colorScheme.surface,
                     tonalElevation = 1.dp,
-                    modifier = Modifier
-                        .padding(start = 10.dp)
-                        .clickable { onLanguageChange(if (language == "en") "kn" else "en") }
+                    modifier = Modifier.padding(start = 10.dp)
                 ) {
                     Text(
                         text = if (language == "en") tr("langKannada") else tr("langEnglish"),
