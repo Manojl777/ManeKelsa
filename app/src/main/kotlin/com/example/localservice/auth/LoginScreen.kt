@@ -95,6 +95,11 @@ fun LoginScreen(
                     }
                 }
                 Surface(
+                    onClick = {
+                        onLanguageChange(
+                            if (language == "en") "kn" else "en"
+                        )
+                    },
                     shape = RoundedCornerShape(50),
                     color = MaterialTheme.colorScheme.surface,
                     tonalElevation = 1.dp,
