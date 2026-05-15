@@ -385,9 +385,14 @@ fun DashboardScaffold(
 
                                         showProfileMenu = false
 
-                                        navController.navigate(
-                                            "settings"
-                                        )
+                                        navController.navigate("login") {
+
+                                            popUpTo(navController.graph.id) {
+                                                inclusive = true
+                                            }
+
+                                            launchSingleTop = true
+                                        }
                                     }
                                 )
 
