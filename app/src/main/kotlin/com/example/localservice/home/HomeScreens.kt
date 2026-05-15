@@ -309,16 +309,125 @@ fun DashboardScaffold(
                                 color = ColorPrimary
                             )
                         }
-                        Surface(
-                            shape = CircleShape,
-                            color = ColorSecondary,
-                            modifier = Modifier
-                                .size(36.dp)
-                                .clickable { userRole = "worker" },
-                            border = androidx.compose.foundation.BorderStroke(1.dp, ColorSecondary.copy(alpha = 0.3f))
-                        ) {
-                            Box(contentAlignment = Alignment.Center) {
-                                Text("M", color = ColorSurface, fontWeight = FontWeight.Bold, fontSize = 16.sp)
+                        Box {
+
+                            Surface(
+                                shape = CircleShape,
+                                color = ColorSecondary,
+                                modifier = Modifier
+                                    .size(40.dp)
+                                    .clickable {
+                                        showProfileMenu = true
+                                    },
+                                border = BorderStroke(
+                                    2.dp,
+                                    ColorTertiary.copy(alpha = 0.12f)
+                                )
+                            ) {
+
+                                Box(
+                                    contentAlignment = Alignment.Center
+                                ) {
+
+                                    Text(
+                                        "M",
+                                        color = ColorSurface,
+                                        fontWeight = FontWeight.Black,
+                                        fontSize = 16.sp
+                                    )
+                                }
+                            }
+
+                            DropdownMenu(
+                                expanded = showProfileMenu,
+                                onDismissRequest = {
+                                    showProfileMenu = false
+                                },
+                                modifier = Modifier
+                                    .background(ColorSurface)
+                            ) {
+
+                                DropdownMenuItem(
+                                    text = {
+
+                                        Text(
+                                            "My Account",
+                                            color = ColorTertiary,
+                                            fontWeight = FontWeight.SemiBold
+                                        )
+                                    },
+                                    leadingIcon = {
+
+                                        Icon(
+                                            Icons.Default.AccountCircle,
+                                            contentDescription = null,
+                                            tint = ColorSecondary
+                                        )
+                                    },
+                                    onClick = {
+
+                                        showProfileMenu = false
+
+                                        navController.navigate(
+                                            "my_account"
+                                        )
+                                    }
+                                )
+
+                                DropdownMenuItem(
+                                    text = {
+
+                                        Text(
+                                            "Settings",
+                                            color = ColorTertiary,
+                                            fontWeight = FontWeight.SemiBold
+                                        )
+                                    },
+                                    leadingIcon = {
+
+                                        Icon(
+                                            Icons.Default.Settings,
+                                            contentDescription = null,
+                                            tint = ColorSecondary
+                                        )
+                                    },
+                                    onClick = {
+
+                                        showProfileMenu = false
+
+                                        navController.navigate(
+                                            "settings"
+                                        )
+                                    }
+                                )
+
+                                HorizontalDivider(
+                                    color = ColorTertiary.copy(alpha = 0.08f)
+                                )
+
+                                DropdownMenuItem(
+                                    text = {
+
+                                        Text(
+                                            "Sign Out",
+                                            color = Color.Red,
+                                            fontWeight = FontWeight.Bold
+                                        )
+                                    },
+                                    leadingIcon = {
+
+                                        Icon(
+                                            Icons.Default.Logout,
+                                            contentDescription = null,
+                                            tint = Color.Red
+                                        )
+                                    },
+                                    onClick = {
+
+                                        showProfileMenu = false
+
+                                    }
+                                )
                             }
                         }
                     }
