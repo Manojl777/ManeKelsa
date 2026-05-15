@@ -83,26 +83,32 @@ fun LoginScreen(
                     tonalElevation = 1.dp,
                     modifier = Modifier.size(50.dp)
                 ) {
-                        Icon(
-                            imageVector =
-                                if (darkMode)
-                                    Icons.Outlined.LightMode
-                                else
-                                    Icons.Outlined.DarkMode,
-                            contentDescription = null,
-                            tint = ColorPrimary
-                        )
-                    }
-                Surface(
-                    onClick = {
-                        onLanguageChange(
-                            if (language == "en") "kn" else "en"
-                        )
-                    },
-                    shape = RoundedCornerShape(50),
-                    color = MaterialTheme.colorScheme.surface,
-                    tonalElevation = 1.dp,
-                    modifier = Modifier.padding(start = 10.dp)
+
+                    Icon(
+                        imageVector =
+                            if (darkMode)
+                                Icons.Outlined.LightMode
+                            else
+                                Icons.Outlined.DarkMode,
+                        contentDescription = null,
+                        tint = ColorPrimary
+                    )
+                }
+
+                Spacer(modifier = Modifier.width(10.dp))
+
+                Box(
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(50))
+                        .background(MaterialTheme.colorScheme.surface)
+                        .clickable {
+
+                            onLanguageChange(
+                                if (language == "en") "kn" else "en"
+                            )
+                        }
+                        .padding(horizontal = 14.dp, vertical = 8.dp),
+                    contentAlignment = Alignment.Center
                 ) {
                     Text(
                         text = if (language == "en") tr("langKannada") else tr("langEnglish"),
