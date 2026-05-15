@@ -493,6 +493,24 @@ private fun MultiSelectDropdown(
                 }
             }
             ExposedDropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }, modifier = Modifier.background(ColorSurface)) {
+                OutlinedTextField(
+                    value = searchQuery,
+                    onValueChange = {
+                        searchQuery = it
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(8.dp),
+                    placeholder = {
+                        Text("Search services...")
+                    },
+                    singleLine = true,
+                    shape = RoundedCornerShape(14.dp),
+                    colors = androidx.compose.material3.OutlinedTextFieldDefaults.colors(
+                        focusedContainerColor = ColorSurface,
+                        unfocusedContainerColor = ColorSurface
+                    )
+                )
                 options.forEach { opt ->
                     DropdownMenuItem(
                         text = { Text(tr(opt.labelKey), color = ColorTertiary) },
