@@ -346,7 +346,10 @@ fun WorkerRegistrationScreen(
                         .height(140.dp),
                     shape = RoundedCornerShape(20.dp),
                     color = ColorSurface,
-                    border = BorderStroke(1.dp, ColorTertiary.copy(alpha = 0.1f))
+                    border = BorderStroke(
+                        1.5.dp,
+                        ColorPrimary.copy(alpha = 0.25f)
+                    )
                 ) {
                     Box(contentAlignment = Alignment.Center) {
                         Icon(Icons.Default.Person, contentDescription = null, tint = ColorTertiary.copy(alpha = 0.8f), modifier = Modifier.size(100.dp))
