@@ -352,6 +352,13 @@ fun WorkerRegistrationScreen(
                     modifier = Modifier.padding(start = 8.dp, top = 4.dp)
                 )
             }
+            Text(
+                text = "• Must be 18 years or older to register",
+                color = ColorSecondary,
+                fontSize = 11.sp,
+                fontWeight = FontWeight.SemiBold,
+                modifier = Modifier.padding(start = 8.dp, top = 4.dp)
+            )
 
             SectionTitle(tr("secServices"), ColorPrimary)
             MultiSelectDropdown(
