@@ -307,6 +307,13 @@ fun WorkerRegistrationScreen(
                         Icon(Icons.Default.CalendarToday, contentDescription = null, tint = ColorTertiary.copy(alpha = 0.6f))
                     }
                 }
+                Text(
+                    text = "• Must be 18 years or older to register",
+                    color = ColorSecondary,
+                    fontSize = 11.sp,
+                    fontWeight = FontWeight.SemiBold,
+                    modifier = Modifier.padding(start = 8.dp, top = 4.dp)
+                )
             }
 
             SectionTitle(tr("secServices"), ColorPrimary)
