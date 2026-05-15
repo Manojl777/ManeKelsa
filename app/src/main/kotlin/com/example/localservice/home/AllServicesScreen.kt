@@ -46,7 +46,8 @@ import com.example.localservice.ui.*
 
 @Composable
 fun AllServicesScreen(
-    language: String
+    language: String,
+    onServiceClick: (String) -> Unit
 ) {
 
     val tr: (String) -> String = { t(language, it) }
@@ -176,7 +177,8 @@ fun AllServicesScreen(
                     GlassCard(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .clickable { }
+                            .clickable { onServiceClick(service.nameKey)
+                            }
                     ) {
 
                         Row(

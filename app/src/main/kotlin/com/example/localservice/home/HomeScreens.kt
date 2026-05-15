@@ -395,8 +395,34 @@ fun DashboardScaffold(
                 }
             }
             composable("all_services") {
+
                 AllServicesScreen(
-                    language = language
+                    language = language,
+                    onServiceClick = { serviceName ->
+
+                        navController.navigate(
+                            "service_workers/$serviceName"
+                        )
+                    }
+                )
+            }
+            composable(
+                route = "service_workers/{serviceName}"
+            ) { backStackEntry ->
+
+                val serviceName =
+                    backStackEntry.arguments?.getString("serviceName")
+                        ?: ""
+
+                ServiceWorkersScreen(
+                    language = language,
+                    serviceName = serviceName,
+                    onWorkerClick = { workerId ->
+
+                        navController.navigate(
+                            "worker_details/$workerId"
+                        )
+                    }
                 )
             }
             composable("worker_details/{workerId}") { backStackEntry ->
