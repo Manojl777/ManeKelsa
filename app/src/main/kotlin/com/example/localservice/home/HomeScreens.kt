@@ -551,6 +551,20 @@ fun DashboardScaffold(
                     onBack = { navController.popBackStack() }
                 )
             }
+            composable("my_account") {
+
+                MyAccountScreen()
+            }
+
+            composable("settings") {
+
+                SettingsScreen(
+                    darkMode = darkMode,
+                    onDarkModeChange = onDarkModeChange,
+                    language = language,
+                    onLanguageChange = onLanguageChange
+                )
+            }
         }
     }
 }
