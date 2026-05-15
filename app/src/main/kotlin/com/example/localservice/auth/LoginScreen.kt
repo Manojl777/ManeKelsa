@@ -70,23 +70,36 @@ fun LoginScreen(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 12.dp),
+                    .padding(horizontal = 20.dp, vertical = 44.dp),
                 horizontalArrangement = Arrangement.End,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                IconButton(onClick = { onDarkModeChange(!darkMode) }) {
-                    Icon(
-                        imageVector = if (darkMode) Icons.Outlined.LightMode else Icons.Outlined.DarkMode,
-                        contentDescription = null,
-                        tint = ColorPrimary
-                    )
+                Surface(
+                    shape = RoundedCornerShape(50),
+                    color = MaterialTheme.colorScheme.surface,
+                    tonalElevation = 1.dp,
+                    modifier = Modifier.size(50.dp)
+                ) {
+                    IconButton(
+                        onClick = { onDarkModeChange(!darkMode) }
+                    ) {
+                        Icon(
+                            imageVector =
+                                if (darkMode)
+                                    Icons.Outlined.LightMode
+                                else
+                                    Icons.Outlined.DarkMode,
+                            contentDescription = null,
+                            tint = ColorPrimary
+                        )
+                    }
                 }
                 Surface(
                     shape = RoundedCornerShape(50),
                     color = MaterialTheme.colorScheme.surface,
                     tonalElevation = 1.dp,
                     modifier = Modifier
-                        .padding(start = 8.dp)
+                        .padding(start = 10.dp)
                         .clickable { onLanguageChange(if (language == "en") "kn" else "en") }
                 ) {
                     Text(
@@ -110,57 +123,57 @@ fun LoginScreen(
                 Spacer(modifier = Modifier.height(56.dp))
                 Card(
                     modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(32.dp),
+                    shape = RoundedCornerShape(40.dp),
                     colors = CardDefaults.cardColors(containerColor = ColorSurface),
-                    elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+                    elevation = CardDefaults.cardElevation(defaultElevation = 14.dp)
                 ) {
                     Column(
-                        modifier = Modifier.padding(horizontal = 24.dp, vertical = 32.dp),
+                        modifier = Modifier.padding(horizontal = 28.dp, vertical = 42.dp),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Surface(
                             color = ColorPrimary,
                             shape = RoundedCornerShape(20.dp),
-                            modifier = Modifier.size(72.dp)
+                            modifier = Modifier.size(86.dp)
                         ) {
                             Box(contentAlignment = Alignment.Center) {
                                 Icon(
                                     Icons.Default.Home,
                                     contentDescription = null,
                                     tint = ColorSurface,
-                                    modifier = Modifier.size(40.dp)
+                                    modifier = Modifier.size(48.dp)
                                 )
                             }
                         }
                         Spacer(modifier = Modifier.height(16.dp))
                         Text(
                             text = tr("appName"),
-                            fontSize = 28.sp,
+                            fontSize = 34.sp,
                             fontWeight = FontWeight.Black,
                             color = ColorPrimary
                         )
                         Spacer(modifier = Modifier.height(6.dp))
                         Text(
                             text = tr("tagline"),
-                            fontSize = 14.sp,
+                            fontSize = 16.sp,
                             fontStyle = FontStyle.Italic,
-                            color = ColorTertiary.copy(alpha = 0.85f),
+                            color = ColorTertiary.copy(alpha = 0.72f),
                             textAlign = TextAlign.Center
                         )
                         Spacer(modifier = Modifier.height(32.dp))
                         Text(
                             text = tr("welcomeTitle"),
-                            fontSize = 22.sp,
+                            fontSize = 30.sp,
                             fontWeight = FontWeight.Bold,
                             color = MaterialTheme.colorScheme.onSurface
                         )
                         Spacer(modifier = Modifier.height(10.dp))
                         Text(
                             text = tr("welcomeBody"),
-                            fontSize = 14.sp,
+                            fontSize = 17.sp,
                             color = ColorTertiary,
                             textAlign = TextAlign.Center,
-                            lineHeight = 20.sp
+                            lineHeight = 28.sp
                         )
                         Spacer(modifier = Modifier.height(32.dp))
                         Surface(
@@ -168,7 +181,7 @@ fun LoginScreen(
                                 // Direct navigation for testing UI flow
                                 onNavigate("role_select")
                             },
-                            shape = RoundedCornerShape(16.dp),
+                            shape = RoundedCornerShape(20.dp),
                             color = ColorSurface,
                             tonalElevation = 2.dp,
                             shadowElevation = 4.dp,
@@ -177,7 +190,7 @@ fun LoginScreen(
                             Row(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .height(56.dp)
+                                    .height(62.dp)
                                     .padding(horizontal = 16.dp),
                                 verticalAlignment = Alignment.CenterVertically,
                                 horizontalArrangement = Arrangement.Center
@@ -210,7 +223,7 @@ fun LoginScreen(
                 Spacer(modifier = Modifier.height(24.dp))
                 Text(
                     text = tr("termsFooter"),
-                    fontSize = 11.sp,
+                    fontSize = 12.sp,
                     color = ColorTertiary.copy(alpha = 0.65f),
                     textAlign = TextAlign.Center,
                     lineHeight = 16.sp,
