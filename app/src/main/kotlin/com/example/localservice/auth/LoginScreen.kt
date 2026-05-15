@@ -75,6 +75,9 @@ fun LoginScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Surface(
+                    onClick = {
+                        onDarkModeChange(!darkMode)
+                    },
                     shape = RoundedCornerShape(50),
                     color = MaterialTheme.colorScheme.surface,
                     tonalElevation = 1.dp,
