@@ -565,6 +565,14 @@ fun DashboardScaffold(
                     onLanguageChange = onLanguageChange
                 )
             }
+            composable("earnings_history") {
+
+                EarningsHistoryScreen(
+                    onBack = {
+                        navController.popBackStack()
+                    }
+                )
+            }
         }
     }
 }
