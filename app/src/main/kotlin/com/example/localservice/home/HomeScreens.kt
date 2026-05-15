@@ -1161,7 +1161,13 @@ fun WorkerHomeScreen(
                 Box(
                     modifier = Modifier
                         .size(14.dp)
-                        .background(if (isOnline) Color(0xFF22C55E) else Color(0xFFEF4444), CircleShape)
+                        .background(
+                            if (isOnline)
+                                Color(0xFF22C55E).copy(alpha = pulse)
+                            else
+                                Color(0xFFEF4444).copy(alpha = pulse),
+                            CircleShape
+                        )
                 )
                 Spacer(modifier = Modifier.width(16.dp))
                 Column(modifier = Modifier.weight(1f)) {
