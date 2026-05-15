@@ -1,9 +1,21 @@
 package com.example.localservice.home
 
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
@@ -23,12 +35,17 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.example.localservice.components.PremiumBackgroundBlobs
 import com.example.localservice.data.UserProfile
 import com.example.localservice.i18n.t
-import com.example.localservice.ui.*
+import com.example.localservice.ui.ColorAppBg
+import com.example.localservice.ui.ColorPrimary
+import com.example.localservice.ui.ColorSecondary
+import com.example.localservice.ui.ColorSurface
+import com.example.localservice.ui.ColorTertiary
 
 @Composable
 fun ServiceWorkersScreen(
@@ -38,6 +55,7 @@ fun ServiceWorkersScreen(
 ) {
 
     val tr: (String) -> String = { t(language, it) }
+    val context = LocalContext.current
 
     val workers = remember {
 
@@ -275,7 +293,17 @@ fun ServiceWorkersScreen(
                             Surface(
                                 shape = RoundedCornerShape(20.dp),
                                 color = ColorSecondary.copy(alpha = 0.12f),
-                                modifier = Modifier.size(54.dp)
+                                modifier = Modifier
+                                    .size(54.dp)
+                                    .clickable {
+
+                                        val intent = Intent(
+                                            Intent.ACTION_DIAL,
+                                            Uri.parse("tel:${worker.phone}")
+                                        )
+
+                                        context.startActivity(intent)
+                                    }
                             ) {
 
                                 Box(
