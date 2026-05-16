@@ -194,7 +194,16 @@ fun ResidentRegistrationScreen(
         ) {
             SectionTitle(tr("secBasic"), ColorPrimary)
             OutlinedField(tr("labelFullName"), fullName) { fullName = it }
-            OutlinedField(tr("labelContact"), phone) { phone = it }
+            OutlinedField(tr("labelContact"), phone) {
+
+                val filtered = it.filter { char ->
+                    char.isDigit()
+                }
+
+                if (filtered.length <= 10) {
+                    phone = filtered
+                }
+            }
 
             OutlinedTextField(
                 value = email,
