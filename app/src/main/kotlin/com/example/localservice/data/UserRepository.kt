@@ -117,7 +117,14 @@ class UserRepository {
         return UserProfile.fromDocument(uid, data)
     }
 
-    suspend fun saveAfterRoleSelection(uid: String, role: String, email: String?, displayName: String?, photoUrl: String?) {
+    suspend fun saveAfterRoleSelection(
+        uid: String,
+        role: String,
+        email: String?,
+        displayName: String?,
+        photoUrl: String?
+    ) {
+
         val map = mapOf(
             "uid" to uid,
             "email" to email,
