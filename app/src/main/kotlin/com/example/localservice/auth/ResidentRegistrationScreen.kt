@@ -48,6 +48,12 @@ import com.example.localservice.ui.ColorAppBg
 import com.example.localservice.ui.ColorPrimary
 import com.example.localservice.ui.ColorSurface
 import com.example.localservice.ui.ColorTertiary
+import com.example.localservice.repository.ResidentRepository
+import com.example.localservice.firebase.FirebaseManager
+import com.example.localservice.model.ResidentModel
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.runtime.rememberCoroutineScope
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
