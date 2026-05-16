@@ -67,7 +67,15 @@ fun ResidentRegistrationScreen(
     onBack: () -> Unit,
 ) {
     val tr: (String) -> String = { t(language, it) }
-    var fullName by remember { mutableStateOf("") }
+    val residentRepository = remember { ResidentRepository() }
+    val coroutineScope = rememberCoroutineScope()
+    val currentUser = Firebase.auth.currentUser
+
+    var fullName by remember {
+        mutableStateOf(
+            currentUser?.displayName ?: ""
+        )
+    }
     var phone by remember { mutableStateOf("") }
     var email by remember {
         mutableStateOf(
