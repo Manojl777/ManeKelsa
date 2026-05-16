@@ -55,7 +55,64 @@ fun LoginScreen(
     onNavigate: (String) -> Unit,
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
-    val tr: (String) -> String = { t(language, it) }
+    val context = LocalContext.current
+
+    val googleAuthHelper = GoogleAuthHelper(context)
+
+    val launcher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+
+        if (result.resultCode == Activity.RESULT_OK) {
+
+            val task = GoogleSignIn.getSignedInAccountFromIntent(
+                result.data
+            )
+
+            try {
+
+                val account = task.result
+
+                val credential = GoogleAuthProvider.getCredential(
+                    account.idToken,
+                    null
+                )
+
+                FirebaseManager.auth
+                    .signInWithCredential(credential)
+                    .addOnCompleteListener { authResult ->
+
+                        if (authResult.isSuccessful) {
+
+                            Toast.makeText(
+                                context,
+                                "Google Sign-In Successful",
+                                Toast.LENGTH_SHORT
+                            ).show()
+
+                            onNavigate("role_select")
+
+                        } else {
+
+                            Toast.makeText(
+                                context,
+                                authResult.exception?.message
+                                    ?: "Authentication Failed",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    }
+
+            } catch (e: Exception) {
+
+                Toast.makeText(
+                    context,
+                    e.message ?: "Google Sign-In Failed",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+        }
+    }
 
     Scaffold(
         containerColor = MaterialTheme.colorScheme.background,
