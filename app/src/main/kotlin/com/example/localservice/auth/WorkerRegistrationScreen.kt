@@ -252,7 +252,14 @@ fun WorkerRegistrationScreen(
             }
 
             OutlinedField(tr("labelContact"), phone) {
-                phone = it
+
+                val filtered = it.filter { char ->
+                    char.isDigit()
+                }
+
+                if (filtered.length <= 10) {
+                    phone = filtered
+                }
             }
 
             OutlinedTextField(
