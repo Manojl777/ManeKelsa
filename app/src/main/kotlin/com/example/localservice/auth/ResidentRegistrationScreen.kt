@@ -212,8 +212,29 @@ fun ResidentRegistrationScreen(
             Button(
                 onClick = {
                     if (fullName.isBlank() || phone.isBlank()) return@Button
-                    // Bypassing all database calls for testing
-                    showSuccess = true
+                    val uid = FirebaseManager.auth.currentUser?.uid ?: return@Button
+
+                    coroutineScope.launch {
+
+                        val resident = ResidentModel(
+                            fullName = fullName,
+                            contactNumber = phone,
+                            email = email,
+                            addrLine1 = address1,
+                            addrLine2 = address2,
+                            area = area,
+                            city = city,
+                            state = state,
+                            pincode = pincode
+                        )
+
+                        residentRepository.saveResident(
+                            uid,
+                            resident
+                        )
+
+                        showSuccess = true
+                    }
                 },
                 modifier = Modifier
                     .fillMaxWidth()
