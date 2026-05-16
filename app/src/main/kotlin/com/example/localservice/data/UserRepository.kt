@@ -204,10 +204,26 @@ class UserRepository {
         val docRef = db().collection("users").document(workerUid)
         db().runTransaction { transaction ->
             val snap = transaction.get(docRef)
-            val currentSum = (snap.data?.get("ratingSum") as? Number)?.toInt() ?: 0
-            val currentCount = (snap.data?.get("ratingCount") as? Number)?.toInt() ?: 0
-            transaction.update(docRef, "ratingSum", currentSum + rating)
-            transaction.update(docRef, "ratingCount", currentCount + 1)
+
+            val currentSum =
+                (snap.data?.get("ratingSum") as? Number)
+                    ?.toInt() ?: 0
+
+            val currentCount =
+                (snap.data?.get("ratingCount") as? Number)
+                    ?.toInt() ?: 0
+
+            transaction.update(
+                docRef,
+                "ratingSum",
+                currentSum + rating
+            )
+
+            transaction.update(
+                docRef,
+                "ratingCount",
+                currentCount + 1
+            )
         }.await()
     }
 
