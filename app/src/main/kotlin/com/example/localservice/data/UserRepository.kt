@@ -200,8 +200,15 @@ class UserRepository {
         }.await()
     }
 
-    suspend fun addWorkerRating(workerUid: String, rating: Int) {
-        val docRef = db().collection("users").document(workerUid)
+    suspend fun addWorkerRating(
+        workerUid: String,
+        rating: Int
+    ) {
+
+        val docRef = db()
+            .collection("users")
+            .document(workerUid)
+
         db().runTransaction { transaction ->
             val snap = transaction.get(docRef)
 
