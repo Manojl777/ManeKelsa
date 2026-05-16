@@ -198,9 +198,21 @@ fun ResidentRegistrationScreen(
             
             OutlinedTextField(
                 value = email,
-                onValueChange = { email = it },
-                label = { Text(tr("labelEmail"), color = ColorTertiary.copy(alpha=0.6f)) },
-                leadingIcon = { Icon(Icons.Default.Email, contentDescription = null, tint = ColorTertiary.copy(alpha=0.4f)) },
+                onValueChange = {},
+                enabled = false,
+                label = {
+                    Text(
+                        tr("labelEmail"),
+                        color = ColorTertiary.copy(alpha = 0.6f)
+                    )
+                },
+                leadingIcon = {
+                    Icon(
+                        Icons.Default.Email,
+                        contentDescription = null,
+                        tint = ColorTertiary.copy(alpha = 0.4f)
+                    )
+                },
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(16.dp),
                 singleLine = true,
