@@ -244,12 +244,31 @@ fun WorkerRegistrationScreen(
                 phone = it
             }
 
-            OutlinedField(
-                "EMAIL",
-                email
-            ) {
-                email = it
-            }
+            OutlinedTextField(
+                value = email,
+                onValueChange = {},
+                enabled = false,
+                label = {
+                    Text(
+                        "EMAIL",
+                        color = ColorTertiary.copy(alpha = 0.6f)
+                    )
+                },
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(16.dp),
+                singleLine = true,
+                colors = androidx.compose.material3.OutlinedTextFieldDefaults.colors(
+                    focusedContainerColor = ColorSurface,
+                    unfocusedContainerColor = ColorSurface,
+                    disabledContainerColor = ColorSurface,
+                    focusedBorderColor = ColorTertiary.copy(alpha = 0.2f),
+                    unfocusedBorderColor = ColorTertiary.copy(alpha = 0.2f),
+                    disabledBorderColor = ColorTertiary.copy(alpha = 0.2f),
+                    focusedTextColor = ColorTertiary,
+                    unfocusedTextColor = ColorTertiary,
+                    disabledTextColor = ColorTertiary
+                )
+            )
 
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp),
                 verticalAlignment = Alignment.Top
