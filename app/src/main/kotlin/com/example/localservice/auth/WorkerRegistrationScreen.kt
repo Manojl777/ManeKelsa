@@ -95,7 +95,15 @@ fun WorkerRegistrationScreen(
     onBack: () -> Unit,
 ) {
     val tr: (String) -> String = { t(language, it) }
-    var fullName by remember { mutableStateOf("") }
+    val workerRepository = remember { WorkerRepository() }
+    val coroutineScope = rememberCoroutineScope()
+    val currentUser = Firebase.auth.currentUser
+
+    var fullName by remember {
+        mutableStateOf(
+            currentUser?.displayName ?: ""
+        )
+    }
     var phone by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var genderExpanded by remember { mutableStateOf(false) }
