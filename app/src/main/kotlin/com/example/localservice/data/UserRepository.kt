@@ -191,8 +191,15 @@ class UserRepository {
         db().collection("users").document(uid).set(map, SetOptions.merge()).await()
     }
 
-    suspend fun addEarnings(uid: String, amount: Int) {
-        val docRef = db().collection("users").document(uid)
+    suspend fun addEarnings(
+        uid: String,
+        amount: Int
+    ) {
+
+        val docRef = db()
+            .collection("users")
+            .document(uid)
+
         db().runTransaction { transaction ->
             val snap = transaction.get(docRef)
 
