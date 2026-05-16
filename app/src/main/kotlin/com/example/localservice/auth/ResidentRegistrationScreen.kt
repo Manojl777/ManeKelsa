@@ -69,7 +69,11 @@ fun ResidentRegistrationScreen(
     val tr: (String) -> String = { t(language, it) }
     var fullName by remember { mutableStateOf("") }
     var phone by remember { mutableStateOf("") }
-    var email by remember { mutableStateOf("") }
+    var email by remember {
+        mutableStateOf(
+            currentUser?.email ?: ""
+        )
+    }
     var address1 by remember { mutableStateOf("") }
     var address2 by remember { mutableStateOf("") }
     var area by remember { mutableStateOf("") }
