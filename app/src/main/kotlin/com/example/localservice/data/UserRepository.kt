@@ -89,9 +89,12 @@ data class UserProfile(
                 workerId = data["workerId"] as? String,
                 isOnline = data["isOnline"] as? Boolean ?: false,
                 minRate = data["minRate"] as? String,
-                totalEarnings = (data["totalEarnings"] as? Number)?.toInt() ?: 0,
-                ratingSum = (data["ratingSum"] as? Number)?.toInt() ?: 0,
-                ratingCount = (data["ratingCount"] as? Number)?.toInt() ?: 0,
+                totalEarnings =
+                    (data["totalEarnings"] as? Number)?.toInt() ?: 0,
+                ratingSum =
+                    (data["ratingSum"] as? Number)?.toInt() ?: 0,
+                ratingCount =
+                    (data["ratingCount"] as? Number)?.toInt() ?: 0,
             )
         }
     }
