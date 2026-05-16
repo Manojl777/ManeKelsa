@@ -526,7 +526,11 @@ fun WorkerRegistrationScreen(
             Spacer(modifier = Modifier.height(16.dp))
             Button(
                 onClick = {
-                    if (selectedServices.isEmpty() || fullName.isBlank() || phone.isBlank()) return@Button
+                    if (
+                        selectedServices.isEmpty() ||
+                        fullName.isBlank() ||
+                        phone.length != 10
+                    ) return@Button
                     val uid = FirebaseManager.auth.currentUser?.uid ?: return@Button
 
                     coroutineScope.launch {

@@ -253,7 +253,12 @@ fun ResidentRegistrationScreen(
             Spacer(modifier = Modifier.height(8.dp))
             Button(
                 onClick = {
-                    if (fullName.isBlank() || phone.isBlank()) return@Button
+                    if (
+                        fullName.isBlank() ||
+                        phone.length != 10
+                    ) {
+                        return@Button
+                    }
                     val uid = FirebaseManager.auth.currentUser?.uid ?: return@Button
 
                     coroutineScope.launch {
