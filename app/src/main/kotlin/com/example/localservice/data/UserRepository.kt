@@ -102,8 +102,16 @@ data class UserProfile(
 
 class UserRepository {
 
-    suspend fun getUserProfile(uid: String): UserProfile? {
-        val snap = db().collection("users").document(uid).get().await()
+    suspend fun getUserProfile(
+        uid: String
+    ): UserProfile? {
+
+        val snap = db()
+            .collection("users")
+            .document(uid)
+            .get()
+            .await()
+
         if (!snap.exists()) return null
         val data = snap.data ?: return null
         return UserProfile.fromDocument(uid, data)
