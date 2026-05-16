@@ -167,7 +167,12 @@ class UserRepository {
             "role" to "resident",
             "profileComplete" to true,
         )
-        db().collection("users").document(uid).set(map, SetOptions.merge()).await()
+
+        db()
+            .collection("users")
+            .document(uid)
+            .set(map, SetOptions.merge())
+            .await()
     }
 
     suspend fun completeWorkerProfile(
