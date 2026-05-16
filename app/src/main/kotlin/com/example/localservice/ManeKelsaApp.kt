@@ -6,9 +6,9 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
@@ -26,13 +26,15 @@ import com.google.firebase.ktx.Firebase
 
 @Composable
 fun ManeKelsaApp() {
-    // Use mutableState instead of rememberSaveable for immediate recomposition
+    // ✅ KEY FIX: Use remember { mutableStateOf } - NOT rememberSaveable
+    // This ensures recomposition happens when state changes
     var darkMode by remember { mutableStateOf(false) }
     var language by remember { mutableStateOf("en") }
 
     val navController = rememberNavController()
     val userRepository = remember { UserRepository() }
 
+    // ✅ Theme wraps everything and recomposes when darkMode changes
     ManeKelsaTheme(darkTheme = darkMode) {
         NavHost(
             navController = navController,
@@ -63,12 +65,18 @@ fun ManeKelsaApp() {
                     CircularProgressIndicator()
                 }
             }
+
+            // ✅ LOGIN SCREEN
             composable("login") {
                 LoginScreen(
                     language = language,
-                    onLanguageChange = { language = it },
+                    onLanguageChange = { newLanguage ->
+                        language = newLanguage  // ✅ This triggers recomposition
+                    },
                     darkMode = darkMode,
-                    onDarkModeChange = { darkMode = it },
+                    onDarkModeChange = { newDarkMode ->
+                        darkMode = newDarkMode  // ✅ This triggers recomposition
+                    },
                     userRepository = userRepository,
                     onNavigate = { route ->
                         navController.navigate(route) {
@@ -78,12 +86,18 @@ fun ManeKelsaApp() {
                     }
                 )
             }
+
+            // ✅ ROLE SELECTION SCREEN
             composable("role_select") {
                 RoleSelectionScreen(
                     language = language,
-                    onLanguageChange = { language = it },
+                    onLanguageChange = { newLanguage ->
+                        language = newLanguage
+                    },
                     darkMode = darkMode,
-                    onDarkModeChange = { darkMode = it },
+                    onDarkModeChange = { newDarkMode ->
+                        darkMode = newDarkMode
+                    },
                     userRepository = userRepository,
                     onNavigate = { route ->
                         navController.navigate(route) {
@@ -92,12 +106,18 @@ fun ManeKelsaApp() {
                     }
                 )
             }
+
+            // ✅ WORKER REGISTRATION SCREEN
             composable("register_worker") {
                 WorkerRegistrationScreen(
                     language = language,
-                    onLanguageChange = { language = it },
+                    onLanguageChange = { newLanguage ->
+                        language = newLanguage
+                    },
                     darkMode = darkMode,
-                    onDarkModeChange = { darkMode = it },
+                    onDarkModeChange = { newDarkMode ->
+                        darkMode = newDarkMode
+                    },
                     userRepository = userRepository,
                     onNavigateWorkerDashboard = {
                         navController.navigate("home?role=worker") {
@@ -110,12 +130,18 @@ fun ManeKelsaApp() {
                     onBack = { navController.popBackStack() }
                 )
             }
+
+            // ✅ RESIDENT REGISTRATION SCREEN
             composable("register_resident") {
                 ResidentRegistrationScreen(
                     language = language,
-                    onLanguageChange = { language = it },
+                    onLanguageChange = { newLanguage ->
+                        language = newLanguage
+                    },
                     darkMode = darkMode,
-                    onDarkModeChange = { darkMode = it },
+                    onDarkModeChange = { newDarkMode ->
+                        darkMode = newDarkMode
+                    },
                     userRepository = userRepository,
                     onNavigateHome = {
                         navController.navigate("home") {
@@ -126,6 +152,8 @@ fun ManeKelsaApp() {
                     onBack = { navController.popBackStack() }
                 )
             }
+
+            // ✅ HOME DASHBOARD SCREEN
             composable("home") {
                 var dashboardRole by remember { mutableStateOf("resident") }
                 LaunchedEffect(Unit) {
@@ -134,9 +162,13 @@ fun ManeKelsaApp() {
                 }
                 DashboardScaffold(
                     language = language,
-                    onLanguageChange = { language = it },
+                    onLanguageChange = { newLanguage ->
+                        language = newLanguage
+                    },
                     darkMode = darkMode,
-                    onDarkModeChange = { darkMode = it },
+                    onDarkModeChange = { newDarkMode ->
+                        darkMode = newDarkMode
+                    },
                     initialDashboardRole = dashboardRole,
                     userRepository = userRepository,
                     onAllServicesClick = {

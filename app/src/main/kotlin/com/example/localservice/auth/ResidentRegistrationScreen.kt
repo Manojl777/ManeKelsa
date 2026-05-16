@@ -42,7 +42,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.localservice.data.UserRepository
 import com.example.localservice.i18n.t
 import com.example.localservice.ui.ColorAppBg
 import com.example.localservice.ui.ColorPrimary
@@ -54,6 +53,8 @@ import com.example.localservice.model.ResidentModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.runtime.rememberCoroutineScope
 import kotlinx.coroutines.launch
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -62,7 +63,6 @@ fun ResidentRegistrationScreen(
     onLanguageChange: (String) -> Unit,
     darkMode: Boolean,
     onDarkModeChange: (Boolean) -> Unit,
-    userRepository: UserRepository, // Keep for signature compatibility
     onNavigateHome: () -> Unit,
     onBack: () -> Unit,
 ) {
@@ -195,7 +195,7 @@ fun ResidentRegistrationScreen(
             SectionTitle(tr("secBasic"), ColorPrimary)
             OutlinedField(tr("labelFullName"), fullName) { fullName = it }
             OutlinedField(tr("labelContact"), phone) { phone = it }
-            
+
             OutlinedTextField(
                 value = email,
                 onValueChange = {},
@@ -219,10 +219,13 @@ fun ResidentRegistrationScreen(
                 colors = androidx.compose.material3.OutlinedTextFieldDefaults.colors(
                     focusedContainerColor = ColorSurface,
                     unfocusedContainerColor = ColorSurface,
-                    focusedBorderColor = ColorTertiary.copy(alpha=0.2f),
-                    unfocusedBorderColor = ColorTertiary.copy(alpha=0.2f),
+                    disabledContainerColor = ColorSurface,
+                    focusedBorderColor = ColorTertiary.copy(alpha = 0.2f),
+                    unfocusedBorderColor = ColorTertiary.copy(alpha = 0.2f),
+                    disabledBorderColor = ColorTertiary.copy(alpha = 0.2f),
                     focusedTextColor = ColorTertiary,
-                    unfocusedTextColor = ColorTertiary
+                    unfocusedTextColor = ColorTertiary,
+                    disabledTextColor = ColorTertiary
                 )
             )
 

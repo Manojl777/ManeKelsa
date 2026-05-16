@@ -1,5 +1,15 @@
 package com.example.localservice.auth
 
+import android.app.Activity
+import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.ui.platform.LocalContext
+import com.example.localservice.auth.GoogleAuthHelper
+import com.example.localservice.firebase.FirebaseManager
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.firebase.auth.GoogleAuthProvider
+import com.example.localservice.data.FirestoreRepository
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -42,7 +52,34 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.localservice.data.UserRepository
-import com.example.localservice.i18n.t
+
+
+// Simple hardcoded translations that WILL work
+val kannadaTranslations = mapOf(
+    "appName" to "ಮನೆ ಕೆಲಸ",
+    "tagline" to "ನಿಮ್ಮ ಬಾಗಿಲ ಬಳಿ ಪ್ರೀಮಿಯಂ ಮನೆ ಸೇವೆಗಳು",
+    "welcomeTitle" to "ಮನೆ ಕೆಲಸಕ್ಕೆ ಸುಸ್ವಾಗತ",
+    "welcomeBody" to "ನಿಮ್ಮ ಹತ್ತಿರ ದೃಢೀಕೃತ ಮನೆ ಸೇವಾ ವೃತ್ತಿಪರರನ್ನು ಹುಡುಕಲು ಅತ್ಯಂತ ವಿಶ್ವಾಸಾರ್ಹ ವೇದಿಕೆ.",
+    "continueGoogle" to "ಗೂಗಲ್ ಮೂಲಕ ಮುಂದುವರಿಯಿರಿ",
+    "termsFooter" to "ಮುಂದುವರಿಸುವ ಮೂಲಕ, ನೀವು ಮನೆ ಕೆಲಸದ ಸೇವಾ ನಿಯಮಗಳು ಮತ್ತು ಗೌಪ್ಯತಾ ನೀತಿಗೆ ಒಪ್ಪುತ್ತೀರಿ.",
+)
+
+val englishTranslations = mapOf(
+    "appName" to "Mane Kelsa",
+    "tagline" to "Premium Home Services at Your Doorstep",
+    "welcomeTitle" to "Welcome to Mane Kelsa",
+    "welcomeBody" to "The most trusted platform to find verified home service professionals nearby.",
+    "continueGoogle" to "Continue with Google",
+    "termsFooter" to "By continuing, you agree to Mane Kelsa's Terms of Service and Privacy Policy.",
+)
+
+fun getText(language: String, key: String): String {
+    return when (language) {
+        "kn" -> kannadaTranslations[key] ?: key
+        "en" -> englishTranslations[key] ?: key
+        else -> englishTranslations[key] ?: key
+    }
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -58,6 +95,7 @@ fun LoginScreen(
     val context = LocalContext.current
 
     val googleAuthHelper = GoogleAuthHelper(context)
+    val firestoreRepository = FirestoreRepository()
 
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.StartActivityForResult()
@@ -84,14 +122,32 @@ fun LoginScreen(
 
                         if (authResult.isSuccessful) {
 
-                            Toast.makeText(
-                                context,
-                                "Google Sign-In Successful",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            val uid = FirebaseManager.auth.currentUser?.uid
 
-                            onNavigate("role_select")
+                            if (uid != null) {
 
+                                firestoreRepository.checkResidentExists(uid) { residentExists ->
+
+                                    if (residentExists) {
+
+                                        onNavigate("resident_home")
+
+                                    } else {
+
+                                        firestoreRepository.checkWorkerExists(uid) { workerExists ->
+
+                                            if (workerExists) {
+
+                                                onNavigate("worker_home")
+
+                                            } else {
+
+                                                onNavigate("role_select")
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                         } else {
 
                             Toast.makeText(
@@ -214,9 +270,9 @@ fun LoginScreen(
                         }
                         Spacer(modifier = Modifier.height(16.dp))
 
-                        // App Name
+                        // App Name - DIRECTLY USE LANGUAGE STATE
                         Text(
-                            text = tr("appName"),
+                            text = getText(language, "appName"),
                             fontSize = 34.sp,
                             fontWeight = FontWeight.Black,
                             color = MaterialTheme.colorScheme.primary
@@ -225,7 +281,7 @@ fun LoginScreen(
 
                         // Tagline
                         Text(
-                            text = tr("tagline"),
+                            text = getText(language, "tagline"),
                             fontSize = 16.sp,
                             fontStyle = FontStyle.Italic,
                             color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.72f),
@@ -235,7 +291,7 @@ fun LoginScreen(
 
                         // Welcome Title
                         Text(
-                            text = tr("welcomeTitle"),
+                            text = getText(language, "welcomeTitle"),
                             textAlign = TextAlign.Center,
                             fontSize = 26.sp,
                             fontWeight = FontWeight.Bold,
@@ -245,7 +301,7 @@ fun LoginScreen(
 
                         // Welcome Body
                         Text(
-                            text = tr("welcomeBody"),
+                            text = getText(language, "welcomeBody"),
                             fontSize = 17.sp,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                             textAlign = TextAlign.Center,
@@ -256,7 +312,9 @@ fun LoginScreen(
                         // Google Sign-In Button
                         Surface(
                             onClick = {
-                                onNavigate("role_select")
+                                launcher.launch(
+                                    googleAuthHelper.getSignInIntent()
+                                )
                             },
                             shape = RoundedCornerShape(20.dp),
                             color = MaterialTheme.colorScheme.surfaceVariant,
@@ -289,7 +347,7 @@ fun LoginScreen(
                                     modifier = Modifier.padding(end = 12.dp)
                                 )
                                 Text(
-                                    text = tr("continueGoogle"),
+                                    text = getText(language, "continueGoogle"),
                                     fontWeight = FontWeight.Bold,
                                     color = MaterialTheme.colorScheme.onSurface
                                 )
@@ -301,7 +359,7 @@ fun LoginScreen(
 
                 // Footer Text
                 Text(
-                    text = tr("termsFooter"),
+                    text = getText(language, "termsFooter"),
                     fontSize = 12.sp,
                     color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.65f),
                     textAlign = TextAlign.Center,

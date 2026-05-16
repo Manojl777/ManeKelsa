@@ -51,7 +51,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.localservice.data.UserRepository
 import com.example.localservice.i18n.t
 import com.example.localservice.ui.ColorAppBg
 import com.example.localservice.ui.ColorPrimary
@@ -80,7 +79,8 @@ import com.example.localservice.firebase.FirebaseManager
 import com.example.localservice.model.WorkerModel
 import androidx.compose.runtime.rememberCoroutineScope
 import kotlinx.coroutines.launch
-
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 private data class ServiceOption(val key: String, val labelKey: String)
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
@@ -90,7 +90,6 @@ fun WorkerRegistrationScreen(
     onLanguageChange: (String) -> Unit,
     darkMode: Boolean,
     onDarkModeChange: (Boolean) -> Unit,
-    userRepository: UserRepository,
     onNavigateWorkerDashboard: () -> Unit,
     onBack: () -> Unit,
 ) {

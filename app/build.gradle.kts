@@ -64,6 +64,7 @@ dependencies {
     implementation("androidx.navigation:navigation-compose:2.8.7")
     implementation("io.coil-kt:coil-compose:2.7.0")
 
+
 // For Kannada fonts/icons if needed, but standard Material 3 covers a lot
 
     // For Kannada fonts/icons if needed, but standard Material 3 covers a lot
