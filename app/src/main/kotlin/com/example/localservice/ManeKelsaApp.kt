@@ -5,10 +5,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -27,8 +26,10 @@ import com.google.firebase.ktx.Firebase
 
 @Composable
 fun ManeKelsaApp() {
-    var darkMode by rememberSaveable { mutableStateOf(false) }
-    var language by rememberSaveable { mutableStateOf("en") }
+    // Use mutableState instead of rememberSaveable for immediate recomposition
+    var darkMode by remember { mutableStateOf(false) }
+    var language by remember { mutableStateOf("en") }
+
     val navController = rememberNavController()
     val userRepository = remember { UserRepository() }
 
@@ -98,14 +99,11 @@ fun ManeKelsaApp() {
                     darkMode = darkMode,
                     onDarkModeChange = { darkMode = it },
                     userRepository = userRepository,
-
                     onNavigateWorkerDashboard = {
-
                         navController.navigate("home?role=worker") {
                             popUpTo(navController.graph.id) {
                                 inclusive = true
                             }
-
                             launchSingleTop = true
                         }
                     },
@@ -141,9 +139,8 @@ fun ManeKelsaApp() {
                     onDarkModeChange = { darkMode = it },
                     initialDashboardRole = dashboardRole,
                     userRepository = userRepository,
-
                     onAllServicesClick = {
-
+                        // Handle all services click
                     }
                 )
             }

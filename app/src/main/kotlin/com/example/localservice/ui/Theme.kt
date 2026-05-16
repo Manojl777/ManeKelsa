@@ -12,21 +12,6 @@ val RawColorTertiary = Color(0xFF5D5E53)
 val RawColorAppBg = Color(0xFFFFFDF5)
 val RawColorSurface = Color(0xFFFFFFFF)
 
-val ColorPrimary: Color
-    @Composable get() = MaterialTheme.colorScheme.primary
-
-val ColorSecondary: Color
-    @Composable get() = MaterialTheme.colorScheme.secondary
-
-val ColorTertiary: Color
-    @Composable get() = MaterialTheme.colorScheme.tertiary
-
-val ColorAppBg: Color
-    @Composable get() = MaterialTheme.colorScheme.background
-
-val ColorSurface: Color
-    @Composable get() = MaterialTheme.colorScheme.surface
-
 @Composable
 fun ManeKelsaTheme(darkTheme: Boolean = false, content: @Composable () -> Unit) {
     val colorScheme = if (darkTheme) {

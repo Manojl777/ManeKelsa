@@ -24,7 +24,6 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
@@ -36,6 +35,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -43,10 +43,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.localservice.data.UserRepository
 import com.example.localservice.i18n.t
-import com.example.localservice.ui.ColorAppBg
-import com.example.localservice.ui.ColorPrimary
-import com.example.localservice.ui.ColorSurface
-import com.example.localservice.ui.ColorTertiary
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -62,13 +58,14 @@ fun LoginScreen(
     val tr: (String) -> String = { t(language, it) }
 
     Scaffold(
-        containerColor = ColorAppBg,
+        containerColor = MaterialTheme.colorScheme.background,
         snackbarHost = { SnackbarHost(snackbarHostState) }
     ) { padding ->
         Box(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(padding)
+                .background(MaterialTheme.colorScheme.background)
         ) {
             Row(
                 modifier = Modifier
@@ -78,54 +75,44 @@ fun LoginScreen(
                 horizontalArrangement = Arrangement.End,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-
+                // Dark Mode Toggle
                 Box(
                     modifier = Modifier
                         .size(50.dp)
                         .clip(RoundedCornerShape(50))
                         .background(MaterialTheme.colorScheme.surface)
                         .clickable {
-
                             onDarkModeChange(!darkMode)
                         },
                     contentAlignment = Alignment.Center
                 ) {
-
                     Icon(
-                        imageVector =
-                            if (darkMode)
-                                Icons.Outlined.LightMode
-                            else
-                                Icons.Outlined.DarkMode,
+                        imageVector = if (darkMode)
+                            Icons.Outlined.LightMode
+                        else
+                            Icons.Outlined.DarkMode,
                         contentDescription = null,
-                        tint = ColorPrimary
+                        tint = MaterialTheme.colorScheme.primary
                     )
                 }
 
                 Spacer(modifier = Modifier.width(10.dp))
 
+                // Language Toggle
                 Box(
                     modifier = Modifier
                         .clip(RoundedCornerShape(50))
                         .background(MaterialTheme.colorScheme.surface)
                         .clickable {
-
-                            onLanguageChange(
-                                if (language == "en") "kn" else "en"
-                            )
+                            onLanguageChange(if (language == "en") "kn" else "en")
                         }
                         .padding(horizontal = 14.dp, vertical = 8.dp),
                     contentAlignment = Alignment.Center
                 ) {
-
                     Text(
-                        text =
-                            if (language == "en")
-                                "ಕನ್ನಡ"
-                            else
-                                "ENGLISH",
+                        text = if (language == "en") "ಕನ್ನಡ" else "ENGLISH",
                         fontWeight = FontWeight.SemiBold,
-                        color = ColorPrimary,
+                        color = MaterialTheme.colorScheme.primary,
                         fontSize = 12.sp
                     )
                 }
@@ -144,15 +131,18 @@ fun LoginScreen(
                         .fillMaxWidth()
                         .padding(top = 120.dp),
                     shape = RoundedCornerShape(40.dp),
-                    colors = CardDefaults.cardColors(containerColor = ColorSurface),
+                    colors = CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.surface
+                    ),
                     elevation = CardDefaults.cardElevation(defaultElevation = 14.dp)
                 ) {
                     Column(
                         modifier = Modifier.padding(horizontal = 28.dp, vertical = 42.dp),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
+                        // App Logo
                         Surface(
-                            color = ColorPrimary,
+                            color = MaterialTheme.colorScheme.primary,
                             shape = RoundedCornerShape(20.dp),
                             modifier = Modifier.size(86.dp)
                         ) {
@@ -160,27 +150,33 @@ fun LoginScreen(
                                 Icon(
                                     Icons.Default.Home,
                                     contentDescription = null,
-                                    tint = ColorSurface,
+                                    tint = MaterialTheme.colorScheme.onPrimary,
                                     modifier = Modifier.size(48.dp)
                                 )
                             }
                         }
                         Spacer(modifier = Modifier.height(16.dp))
+
+                        // App Name
                         Text(
                             text = tr("appName"),
                             fontSize = 34.sp,
                             fontWeight = FontWeight.Black,
-                            color = ColorPrimary
+                            color = MaterialTheme.colorScheme.primary
                         )
                         Spacer(modifier = Modifier.height(6.dp))
+
+                        // Tagline
                         Text(
                             text = tr("tagline"),
                             fontSize = 16.sp,
                             fontStyle = FontStyle.Italic,
-                            color = ColorTertiary.copy(alpha = 0.72f),
+                            color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.72f),
                             textAlign = TextAlign.Center
                         )
                         Spacer(modifier = Modifier.height(32.dp))
+
+                        // Welcome Title
                         Text(
                             text = tr("welcomeTitle"),
                             textAlign = TextAlign.Center,
@@ -189,21 +185,24 @@ fun LoginScreen(
                             color = MaterialTheme.colorScheme.onSurface
                         )
                         Spacer(modifier = Modifier.height(10.dp))
+
+                        // Welcome Body
                         Text(
                             text = tr("welcomeBody"),
                             fontSize = 17.sp,
-                            color = ColorTertiary,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
                             textAlign = TextAlign.Center,
                             lineHeight = 28.sp
                         )
                         Spacer(modifier = Modifier.height(32.dp))
+
+                        // Google Sign-In Button
                         Surface(
                             onClick = {
-                                // Direct navigation for testing UI flow
                                 onNavigate("role_select")
                             },
                             shape = RoundedCornerShape(20.dp),
-                            color = ColorSurface,
+                            color = MaterialTheme.colorScheme.surfaceVariant,
                             tonalElevation = 2.dp,
                             shadowElevation = 4.dp,
                             modifier = Modifier.fillMaxWidth()
@@ -223,10 +222,10 @@ fun LoginScreen(
                                     style = androidx.compose.ui.text.TextStyle(
                                         brush = androidx.compose.ui.graphics.Brush.linearGradient(
                                             colors = listOf(
-                                                androidx.compose.ui.graphics.Color(0xFF4285F4),
-                                                androidx.compose.ui.graphics.Color(0xFFDB4437),
-                                                androidx.compose.ui.graphics.Color(0xFFF4B400),
-                                                androidx.compose.ui.graphics.Color(0xFF0F9D58)
+                                                Color(0xFF4285F4),
+                                                Color(0xFFDB4437),
+                                                Color(0xFFF4B400),
+                                                Color(0xFF0F9D58)
                                             )
                                         )
                                     ),
@@ -242,10 +241,12 @@ fun LoginScreen(
                     }
                 }
                 Spacer(modifier = Modifier.height(24.dp))
+
+                // Footer Text
                 Text(
                     text = tr("termsFooter"),
                     fontSize = 12.sp,
-                    color = ColorTertiary.copy(alpha = 0.65f),
+                    color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.65f),
                     textAlign = TextAlign.Center,
                     lineHeight = 16.sp,
                     modifier = Modifier.padding(horizontal = 8.dp)
