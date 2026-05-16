@@ -105,7 +105,11 @@ fun WorkerRegistrationScreen(
         )
     }
     var phone by remember { mutableStateOf("") }
-    var email by remember { mutableStateOf("") }
+    var email by remember {
+        mutableStateOf(
+            currentUser?.email ?: ""
+        )
+    }
     var genderExpanded by remember { mutableStateOf(false) }
     var gender by remember { mutableStateOf("male") }
     var dob by remember { mutableStateOf("") }
