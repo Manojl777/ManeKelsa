@@ -188,7 +188,12 @@ class UserRepository {
             "isOnline" to isOnline,
             "minRate" to minRate
         )
-        db().collection("users").document(uid).set(map, SetOptions.merge()).await()
+
+        db()
+            .collection("users")
+            .document(uid)
+            .set(map, SetOptions.merge())
+            .await()
     }
 
     suspend fun addEarnings(
