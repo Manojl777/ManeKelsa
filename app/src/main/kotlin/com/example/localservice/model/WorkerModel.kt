@@ -2,21 +2,22 @@ package com.example.localservice.model
 
 data class WorkerModel(
 
-    // Basic Details
+    val uid: String = "",
+
+    val id: String = "",
+
     val fullName: String = "",
 
-    val contactNumber: String = "",
-
     val email: String = "",
+
+    val contactNumber: String = "",
 
     val gender: String = "",
 
     val dob: String = "",
 
-    // Services
-    val services: List<String> = emptyList(),
+    val serviceTypes: List<String> = emptyList(),
 
-    // Address
     val addrLine1: String = "",
 
     val addrLine2: String = "",
@@ -29,25 +30,23 @@ data class WorkerModel(
 
     val pincode: String = "",
 
-    // Work Areas
-    val workAreas: String = "",
+    val preferredAreasText: String = "",
 
-    // Uploaded Images
-    val profilePhotoUrl: String = "",
+    val profilePic: String = "",
 
-    val idCardPhotoUrl: String = "",
+    val idProof: String = "",
 
-    // Worker System Data
-    val workerId: String = "",
+    val minRate: Int = 0,
 
     val isAvailable: Boolean = false,
 
-    val averageRating: Double = 0.0,
+    val rating: Double = 4.5,
 
     val totalRatings: Int = 0,
 
     val totalEarnings: Int = 0,
 
-    // Metadata
-    val createdAt: Long = System.currentTimeMillis()
+    val createdAt: String = "",
+
+    val updatedAt: String = ""
 )

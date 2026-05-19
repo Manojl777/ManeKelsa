@@ -2,6 +2,7 @@ package com.example.localservice.repository
 
 import com.example.localservice.firebase.FirebaseManager
 import com.example.localservice.model.WorkerModel
+import com.google.firebase.firestore.FieldValue
 import kotlinx.coroutines.tasks.await
 
 class WorkerRepository {
@@ -42,6 +43,19 @@ class WorkerRepository {
         return snapshot.toObject(WorkerModel::class.java)
     }
 
+    suspend fun getAllWorkers(): List<WorkerModel> {
+
+        val snapshot = firestore
+            .collection("workers")
+            .get()
+            .await()
+
+        return snapshot.documents.mapNotNull {
+
+            it.toObject(WorkerModel::class.java)
+        }
+    }
+
     suspend fun workerExists(
         uid: String
     ): Boolean {
@@ -79,13 +93,24 @@ class WorkerRepository {
         val earning = mapOf(
             "amount" to amount,
             "date" to date,
-            "time" to time
+            "time" to time,
+            "createdAt" to System.currentTimeMillis()
         )
 
         firestore.collection("workers")
             .document(workerUid)
             .collection("earnings")
             .add(earning)
+            .await()
+
+        // UPDATE TOTAL EARNINGS
+
+        firestore.collection("workers")
+            .document(workerUid)
+            .update(
+                "totalEarnings",
+                FieldValue.increment(amount.toLong())
+            )
             .await()
     }
 
@@ -98,11 +123,44 @@ class WorkerRepository {
         val rating = mapOf(
             "workerId" to workerUid,
             "residentId" to residentId,
-            "score" to score
+            "score" to score,
+            "createdAt" to System.currentTimeMillis()
         )
 
         firestore.collection("worker_ratings")
             .add(rating)
+            .await()
+
+        // GET CURRENT WORKER
+
+        val workerDoc = firestore
+            .collection("workers")
+            .document(workerUid)
+            .get()
+            .await()
+
+        val currentAverage =
+            workerDoc.getDouble("averageRating") ?: 0.0
+
+        val currentTotalRatings =
+            workerDoc.getLong("totalRatings") ?: 0L
+
+        // CALCULATE NEW AVERAGE
+
+        val newTotalRatings = currentTotalRatings + 1
+
+        val newAverage =
+            ((currentAverage * currentTotalRatings) + score)
+        // UPDATE WORKER DOCUMENT
+
+        firestore.collection("workers")
+            .document(workerUid)
+            .update(
+                mapOf(
+                    "averageRating" to newAverage,
+                    "totalRatings" to newTotalRatings
+                )
+            )
             .await()
     }
 }
